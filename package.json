@@ -13,11 +13,10 @@
     },
     "homepage": "https://github.com/cdibened/cordova-plugins",
     "bin": {
-        "venue": "./bin/cordova-plugins"
+        "cordova-plugins": "./bin/cordova-plugins"
     },
     "dependencies": {
         "shelljs": ">=0.2.6",
-        "cordova": ">=3.*",
         "nopt": ">=2.1.2",
         "cli-color": ">=0.2.3",
         "prompt": ">=0.2.*",
