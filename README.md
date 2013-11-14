@@ -1,7 +1,7 @@
 cordova-plugins
 ===============
 
-NPM package to list/download available plugins from http://plugins.cordova.io/
+NPM package to list/download available plugins from [http://plugins.cordova.io/](http://plugins.cordova.io/)
 
 ###Installation
 
@@ -19,7 +19,7 @@ NPM package to list/download available plugins from http://plugins.cordova.io/
 
 `cordova-plugins [-d *dir] get *plugin-url`
 
-- download the plugin @ *plugin-url in the specified \*dir or `tmp`
+- download the plugin @ \*plugin-url in the specified \*dir or `tmp`
 
 
 ###2-Dew
