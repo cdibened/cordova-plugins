@@ -7,8 +7,6 @@ var path = require("path"),
     clc = require('cli-color'),
     shell = require("shelljs"),
     // prompt = require( "prompt" ),
-    bootstrapdir = path.join(path.dirname(fs.realpathSync(__filename)), "../bootstrap"),
-    scriptsdir = path.join(path.dirname(fs.realpathSync(__filename)), "../scripts"),
     tmp = shell.tempdir(),
     pluginsfile = tmp + "plugins.json",
     knownOpts = {
@@ -19,6 +17,31 @@ var path = require("path"),
     },
     parsed = nopt(knownOpts, shortHands, process.argv, 2),
     args = process.argv.splice(2);
+
+// json format from http://registry.cordova.io
+// "se.sanitarium.cordova.exitapp":{
+//    "name":"se.sanitarium.cordova.exitapp",
+//    "description":"Implements navigator.app.exitApp on WP8",
+//    "dist-tags":{
+//       "latest":"1.0.0"
+//    },
+//    "maintainers":[
+//       {
+//          "name":"gaqzi",
+//          "email":"ba@sanitarium.se"
+//       }
+//    ],
+//    "time":{
+//       "modified":"2013-11-06T07:56:10.217Z"
+//    },
+//    "versions":{
+//       "1.0.0":"latest"
+//    },
+//    "keywords":[
+//       "cordova",
+//       "terminate"
+//    ]
+// }
 
 function printPluginList(obj, filter) {
     "use strict";
@@ -47,30 +70,7 @@ function printPluginList(obj, filter) {
         return plugins;
     }
 
-    if (args.length === 0) {
-        // "se.sanitarium.cordova.exitapp":{
-        //    "name":"se.sanitarium.cordova.exitapp",
-        //    "description":"Implements navigator.app.exitApp on WP8",
-        //    "dist-tags":{
-        //       "latest":"1.0.0"
-        //    },
-        //    "maintainers":[
-        //       {
-        //          "name":"gaqzi",
-        //          "email":"ba@sanitarium.se"
-        //       }
-        //    ],
-        //    "time":{
-        //       "modified":"2013-11-06T07:56:10.217Z"
-        //    },
-        //    "versions":{
-        //       "1.0.0":"latest"
-        //    },
-        //    "keywords":[
-        //       "cordova",
-        //       "terminate"
-        //    ]
-        // }
+    if( (args.length === 0) || ( ( args.length === 1 ) && ( args[0].toLowerCase() === 'list' ) ) ) {
         var list = retrievePluginList();
         printPluginList(list || {});
     }
