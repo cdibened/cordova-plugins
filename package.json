@@ -1,12 +1,13 @@
 {
     "name": "cordova-plugins",
     "version": "0.0.1",
-    "author": "Ceisdio DiBenedetto <sid.dibenedetto@gmail.com>",
-    "description": "List/download available plugins from registry.cordova.io",
+    "author": "Cesidio DiBenedetto <sid.dibenedetto@gmail.com>",
+    "description": "List/download available plugins from http://plugins.cordova.io/",
     "keywords": [
         "cordova",
         "plugins"
     ],
+    "preferGlobal": true,
     "repository": {
         "type": "git",
         "url": "https://github.com/cdibened/cordova-plugins.git"
@@ -15,6 +16,10 @@
     "bin": {
         "cordova-plugins": "./bin/cordova-plugins"
     },
+    "bugs": {
+      "url": "https://github.com/cdibened/cordova-plugins/issues"
+    },
+    "license": "MIT",
     "dependencies": {
         "shelljs": ">=0.2.6",
         "nopt": ">=2.1.2",
