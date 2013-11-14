@@ -14,7 +14,7 @@
     },
     "homepage": "https://github.com/cdibened/cordova-plugins",
     "bin": {
-        "cordova-plugins": "./bin/cordova-plugins"
+        "cordova-plugins": "./bin/cordova-plugins.js"
     },
     "bugs": {
       "url": "https://github.com/cdibened/cordova-plugins/issues"
