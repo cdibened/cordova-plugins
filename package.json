@@ -1,10 +1,11 @@
 {
     "name": "cordova-plugins",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "author": "Cesidio DiBenedetto <sid.dibenedetto@gmail.com>",
-    "description": "List/download available plugins from http://plugins.cordova.io/",
+    "description": "List/download available Phonegap plugins from http://plugins.cordova.io and http://plugreg.com",
     "keywords": [
         "cordova",
+        "phonegap",
         "plugins"
     ],
     "preferGlobal": true,
@@ -25,6 +26,7 @@
         "nopt": ">=2.1.2",
         "cli-color": ">=0.2.3",
         "prompt": ">=0.2.*",
+        "scrap": ">=0.1.0",
         "exit": ">=0.0.1"
     },
     "engines": {

@@ -6,90 +6,67 @@
         fs = require("fs"),
         exit = require("exit"),
         nopt = require("nopt"),
-        clc = require('cli-color'),
         shell = require("shelljs"),
         // prompt = require( "prompt" ),
+        clc = require('cli-color'),
+        scrap = require('scrap'),
         tmp = shell.tempdir(),
-        pluginsfile = tmp + "plugins.json",
         knownOpts = {
-            "dir": path
+            "platforms": String,
+            "url": String
         },
         shortHands = {
-            "d": ["--dir", tmp]
+            "p": ["--platforms"],
+            "u": ["--url"]
         },
         parsed = nopt(knownOpts, shortHands, process.argv, 2),
+        plugreg = require('../scripts/plugreg-com'),
+        registrycordova = require('../scripts/registry-cordova-io'),
         args = process.argv.splice(2);
 
-    // json format from http://registry.cordova.io
-    // "se.sanitarium.cordova.exitapp":{
-    //    "name":"se.sanitarium.cordova.exitapp",
-    //    "description":"Implements navigator.app.exitApp on WP8",
-    //    "dist-tags":{
-    //       "latest":"1.0.0"
-    //    },
-    //    "maintainers":[
-    //       {
-    //          "name":"gaqzi",
-    //          "email":"ba@sanitarium.se"
-    //       }
-    //    ],
-    //    "time":{
-    //       "modified":"2013-11-06T07:56:10.217Z"
-    //    },
-    //    "versions":{
-    //       "1.0.0":"latest"
-    //    },
-    //    "keywords":[
-    //       "cordova",
-    //       "terminate"
-    //    ]
-    // }
-
-    function printPluginList(obj, filter) {
-        var plugin;
-        for (var key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                if (key !== '_updated') {
-                    plugin = obj[key];
-                    if (!filter || (filter && filter.trim() !== '' &&
-                        ((plugin.name.indexOf(filter) !== -1) || (plugin.description && plugin.description.indexOf(filter) !== -1)))) {
-                        shell.echo("Name:  " + plugin.name.trim());
-                        shell.echo("Description:  " + (plugin.description ? plugin.description.trim() : "No description available."));
-                        shell.echo("Version:  " + plugin["dist-tags"].latest.trim());
-                        shell.echo("Last Modified:  " + new Date(plugin.time.modified));
-                        shell.echo(clc.greenBright("Url:  http://registry.cordova.io/" + key + "/-/" + key + "-" + plugin["dist-tags"].latest.trim() + ".tgz \n"));
-                    }
-                }
-            }
-        }
-    }
-
-    function retrievePluginList() {
-        shell.exec("curl -s -o " + pluginsfile + " http://registry.cordova.io/-/all 2>&1");
-        var plugins = require(pluginsfile);
-        return plugins;
-    }
-
-    if ((args.length === 0) || ((args.length === 1) && (args[0].toLowerCase() === 'list'))) {
-        var list = retrievePluginList();
-        printPluginList(list || {});
+    if (args.length === 0) {
+        shell.echo( "");
+        shell.echo( "cordova-plugins [options] command [term]");
+        shell.echo( "");
+        shell.echo( "   commands:");
+        shell.echo( "       list       - display all available plugins");
+        shell.echo( "       search     - search plugins for a specfic term/phrase ");
+        shell.echo( "");
+        shell.echo( "   options:");
+        shell.echo( "       -p         - comma delimited (no spaces) platforms to filter by.");
+        shell.echo("                    Valid platforms are: " + clc.redBright( "ios android blackberry10 wp7 wp8 firefoxos" ) + "." );
+        shell.echo("                    Default is all.");
+        shell.echo( "       -u         - the url of the repo to use.");
+        shell.echo("                    Valid urls are: "+ clc.yellowBright( "http://plugreg.com") + " and ");
+        shell.echo("                    " + clc.yellowBright("http://plugins.cordova.io") + ". Default is http://plugins.cordova.io");
+        shell.echo( "");
+        shell.echo( "   term           - term to use when using the `search` command.");
+        shell.echo("                    Wrap the term in quotes if there are spaces.");
+        shell.echo( "\nexample: cordova-plugins -p ios,android list");
+        shell.echo( "");
     }
     else {
-        var directory = parsed.dir,
-            command = directory ? parsed.argv.remain[1] : parsed.argv.remain[0],
-            plugin = directory ? parsed.argv.remain[2] : parsed.argv.remain[1];
+        var platforms = (parsed.platforms ? parsed.platforms.split(',') : []),
+            url = parsed.url,
+            command = parsed.argv.remain[0],
+            plugin = parsed.argv.remain[1];
 
         switch (command.toLowerCase()) {
-            case "search":
-                var list = retrievePluginList();
-                printPluginList(list || {}, plugin);
-                break;
-            case "get":
-                directory = directory || tmp;
-                shell.exec("curl -s -o " + directory + plugin.substring(plugin.lastIndexOf("/")) + " " + plugin + " 2>&1");
-                shell.echo(directory + plugin.substring(plugin.lastIndexOf("/")));
-                break;
-            default:
+        case "list":
+        case "search":
+            if( url && ( url.toLowerCase().indexOf( "plugreg" ) !== -1 ) ) {
+                plugreg.fetch(plugin,platforms);
+            }
+            else {
+                registrycordova.fetch(plugin,platforms);
+            }
+            break;
+        // case "get":
+            // directory = directory || tmp;
+            // shell.exec("curl -s -o " + directory + plugin.substring(plugin.lastIndexOf("/")) + " " + plugin + " 2>&1");
+            // shell.echo(directory + plugin.substring(plugin.lastIndexOf("/")));
+            // break;
+        default:
         }
     }
 })();
