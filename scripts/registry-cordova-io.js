@@ -30,7 +30,7 @@
         scrap = require('scrap'),
         clc = require('cli-color'),
         tmp = shell.tempdir(),
-        pluginsfile = tmp + "plugins.json",
+        pluginsfile = tmp + "/plugins.json",
         url = 'http://plugreg.com',
         plugins = [];
 
