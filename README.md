@@ -16,6 +16,16 @@ supports version number          |   No version number
 supports modified date           |   No modified date
 ```
 
+
+*Modified date is color coded to give an indication on the activity.
+
+Bright Green - activity within the previous month
+
+Bright Yellow - activity between 1 and 2 months ago
+
+Bright Red - activity more than 2 months ago
+
+
 ###Installation
 
 `sudo npm install -g cordova-plugins`

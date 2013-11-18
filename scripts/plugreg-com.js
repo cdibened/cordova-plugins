@@ -22,17 +22,17 @@
 //      </div>
 
 (function() {
-    "use strict";
-    var shell = require("shelljs"),
-        // prompt = require( "prompt" ),
+    'use strict';
+    var clc = require('cli-color'),
+        moment = require('moment'),
+        // prompt = require( 'prompt' ),
         scrap = require('scrap'),
-        clc = require('cli-color'),
         url = 'http://plugreg.com',
         plugins = [];
 
     function printPluginList(obj, filter, platforms) {
         var plugin,
-            filterRegEx = new RegExp(filter, "i"),
+            filterRegEx = new RegExp(filter, 'i'),
             matchedPlatform = true,
             checkPlatform = function( val ) {
                 return ( this.platforms.indexOf( val.toLowerCase() ) !== -1 );
@@ -52,12 +52,12 @@
                             // }
                         }
                         if( matchedPlatform ) {
-                            shell.echo("Name:  " + plugin.name);
-                            shell.echo(clc.cyanBright("Description:  " + plugin.description));
-                            shell.echo("Platforms:  " + plugin.platforms);
-                            //shell.echo("Version:  " + plugin["dist-tags"].latest.trim());
-                            //shell.echo("Last Modified:  " + new Date(plugin.time.modified));
-                            shell.echo(clc.greenBright("Url:  " + plugin.url + "\n"));
+                            console.log('Name:  ' + plugin.name);
+                            console.log(clc.cyanBright('Description:  ' + plugin.description));
+                            console.log('Platforms:  ' + plugin.platforms);
+                            //console.log('Version:  ' + plugin['dist-tags'].latest.trim());
+                            //console.log('Last Modified:  ' + new Date(plugin.time.modified));
+                            console.log(clc.magentaBright('Url:  ' + plugin.url + '\n'));
                         }
                     }
                 }
@@ -82,9 +82,9 @@
                 plugin.loc = element.children[1].children[0].attribs.href;
                 scrap('http://plugreg.com' + plugin.loc, function(err, $) {
                     var description = $('div[class=\'description\']')[0].children[0].data || '';
-                    plugin.description = description.trim() === '' ? "No description available." : description.trim();
+                    plugin.description = description.trim() === '' ? 'No description available.' : description.trim();
                     var url = $('div.install.description')[0].children[3].children[0].data;
-                    url = url.substring(url.indexOf("http"));
+                    url = url.substring(url.indexOf('http'));
                     plugin.url = url;
                     plugins.push(plugin);
                 });
