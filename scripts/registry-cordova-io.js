@@ -31,10 +31,8 @@
         os = require('os'),
         // prompt = require( 'prompt' ),
         request = require('request'),
-        scrap = require('scrap'),
         tmp = os.tmpdir(),
-        pluginsfile = tmp + '/plugins.json',
-        url = 'http://plugreg.com',
+        pluginsfile = tmp + '/rc-plugins.json',
         dateFromColorNotication = ['greenBright', 'yellowBright', 'redBright'];
 
     function printPluginList(obj, filter, platforms) {
@@ -62,6 +60,7 @@
                         if( matchedPlatform ) {
                             console.log('Name:  ' + plugin.name.trim());
                             console.log(clc.cyanBright('Description:  ' + (plugin.description ? plugin.description.trim() : 'No description available.')));
+                            // console.log('Platforms:  ' + plugin.platforms);
                             console.log('Version:  ' + plugin['dist-tags'].latest.trim());
                             diff = moment().diff(new Date(plugin.time.modified), 'months' );
                             if( diff > 2 ) {
@@ -88,4 +87,3 @@
     exports.fetch = _fetch;
 
 })();
-

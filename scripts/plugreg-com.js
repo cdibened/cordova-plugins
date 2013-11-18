@@ -1,27 +1,3 @@
-// <blockquote data-platforms="android,ios">
-//                 <p><a href="/plugin/edewit/aerogear-pushplugin-cordova">AeroGear PushPlugin</a></p>
-//                 <small>by edewit</small>
-//             </blockquote>
-//
-//
-// <div class="page-header plugin">
-//          <h1>AdMobPlugin <small>by aliokan</small></h1>
-//      </div>
-//      <div class="description">
-//          Google AdMob Plugin
-//      </div>
-//      <div class="well well-sm description">
-
-//              The description within the <a target="_blank" href="https://raw.github.com/aliokan/cordova-plugin-admob/master/plugin.xml">plugin.xml</a> for AdMobPlugin is very short.<br/>
-
-//          More information could be available on the <a href="https://github.com/aliokan/cordova-plugin-admob" target="_blank">GitHub README</a>.
-//      </div>
-//      <div class="install description">
-//          <h4>Install AdMobPlugin using the <a href="http://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-line%20Interface" target="_blank">Cordova CLI</a>:</h4>
-//          <p>$ cordova plugin add https://github.com/aliokan/cordova-plugin-admob.git</p>
-//      </div>
-
-
 // new JSON REST Response
 // {
 //     "username": "aliokan",
@@ -43,14 +19,18 @@
 (function() {
     'use strict';
     var clc = require('cli-color'),
+        fs = require('fs'),
         moment = require('moment'),
+        os = require('os'),
         // prompt = require( 'prompt' ),
-        scrap = require('scrap'),
-        url = 'http://plugreg.com',
-        plugins = [];
+        request = require('request'),
+        tmp = os.tmpdir(),
+        pluginsfile = tmp + '/pr-plugins.json',
+        dateFromColorNotication = ['greenBright', 'yellowBright', 'redBright'];
 
     function printPluginList(obj, filter, platforms) {
         var plugin,
+            diff = 0,
             filterRegEx = new RegExp(filter, 'i'),
             matchedPlatform = true,
             checkPlatform = function( val ) {
@@ -74,8 +54,12 @@
                             console.log('Name:  ' + plugin.name);
                             console.log(clc.cyanBright('Description:  ' + plugin.description));
                             console.log('Platforms:  ' + plugin.platforms);
-                            //console.log('Version:  ' + plugin['dist-tags'].latest.trim());
-                            //console.log('Last Modified:  ' + new Date(plugin.time.modified));
+                            // console.log('Version:  ' + plugin['dist-tags'].latest.trim());
+                            // diff = moment().diff(new Date(plugin.time.modified), 'months' );
+                            // if( diff > 2 ) {
+                            //     diff = 2;
+                            // }
+                            // console.log(clc[dateFromColorNotication[diff]]('Last Modified:  ' + new Date(plugin.time.modified) + ' (' + moment(new Date(plugin.time.modified)).fromNow() +')'));
                             console.log(clc.magentaBright('Url:  ' + plugin.url + '\n'));
                         }
                     }
@@ -84,37 +68,15 @@
         }
     }
 
-    var _fetch = function(search, platforms) {
-        scrap(url + '/plugins', function(err, $) {
-            var platforms;
-            $('blockquote').each(function(idx, element) {
-                var plugin = {};
-                plugin.name = element.children[1].children[0].children[0].data.trim();
-                platforms = element.attribs['data-platforms'];
-                if (!platforms) {
-                    platforms = [];
-                }
-                else {
-                    platforms = element.attribs['data-platforms'].toLowerCase().split(',');
-                }
-                plugin.platforms = platforms;
-                plugin.loc = element.children[1].children[0].attribs.href;
-                scrap('http://plugreg.com' + plugin.loc, function(err, $) {
-                    var description = $('div[class=\'description\']')[0].children[0].data || '';
-                    plugin.description = description.trim() === '' ? 'No description available.' : description.trim();
-                    var url = $('div.install.description')[0].children[3].children[0].data;
-                    url = url.substring(url.indexOf('http'));
-                    plugin.url = url;
-                    plugins.push(plugin);
-                });
+    function _fetch(search, platforms) {
+        var file = fs.createWriteStream(pluginsfile,'w+'),
+            req = request('http://plugreg.com/api/plugins').pipe(file);
+            req.on( 'finish', function() {
+                var plugins = require(pluginsfile);
+                printPluginList(plugins, search, platforms);
             });
-        });
-        setTimeout(function() {
-            printPluginList(plugins, search, platforms);
-        }, 15000);
-    };
+    }
 
     exports.fetch = _fetch;
 
 })();
-
