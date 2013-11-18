@@ -21,6 +21,25 @@
 //          <p>$ cordova plugin add https://github.com/aliokan/cordova-plugin-admob.git</p>
 //      </div>
 
+
+// new JSON REST Response
+// {
+//     "username": "aliokan",
+//     "project": "cordova-plugin-admob",
+//     "name": "AdMobPlugin",
+//     "description": "Google AdMob Plugin",
+//     "engines": [
+//         "cordova : >=2.9.0"
+//     ],
+//     "platforms": [
+//         "android",
+//         "ios"
+//     ],
+//     "keywords": [
+//     ],
+//     "url": "https://github.com/aliokan/cordova-plugin-admob.git"
+// }
+
 (function() {
     'use strict';
     var clc = require('cli-color'),

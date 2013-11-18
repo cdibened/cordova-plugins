@@ -44,7 +44,7 @@ options:
                 Valid platforms are: ios, android, blackberry10, wp7, wp8, firefoxos.
                 Default is all.
     -u         - the url of the repo to use.
-                Valid urls are: http://plugreg.com and
+                Valid urls are: http://plugreg.com (shortform plugreg) and
                 http://plugins.cordova.io. Default is http://plugins.cordova.io
 
 term           - term to use when using the `search` command.
@@ -54,12 +54,15 @@ term           - term to use when using the `search` command.
 
 ###Examples
 cordova-plugins -p ios,android list
+
 - will list all plugins from `http://plugins.cordova.io` (the -p option has no effect)
 
-cordova-plugins -p ios,android -u http://plugreg.com list
+cordova-plugins -p ios,android -u http://plugreg.com (or plugreg) list
+
 - will list all plugins from `http://plugreg.com` that are on the ios and/or android platforms
 
 cordova-plugins search camera
+
 - will list all plugins from `http://plugins.cordova.io` that have the term `camera` in the name or description
 
 
