@@ -5,16 +5,15 @@ NPM package to list/download available Phonegap plugins from [http://plugins.cor
 [http://plugreg.com/](http://plugreg.com/)
 
 Comparison between the two sites:
-```
-http://plugins.cordova.io        |   http://plugreg.com
--------------------------        |   ------------------
-REST API(faster)                 |   No REST API (need to scrape, slower)
-~100 plugins                     |   ~220 plugins
-no support for platform filter   |   supports platform filter
-.tgz plugin tarball URL          |   Git plugin project URL
-supports version number          |   No version number
-supports modified date           |   No modified date
-```
+
+http://plugreg.com | http://plugins.cordova.io
+--- | ---
+REST API | REST API
+~220 plugins | ~100 plugins
+Supports platform filter | No support for platform filter
+Git plugin project URL | .tgz plugin tarball URL
+No version number (coming soon) | Supports version number 
+No modified date (coming soon) | Supports  modified date
 
 
 *Modified date is color coded to give an indication on the activity.
