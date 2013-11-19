@@ -8,7 +8,6 @@
         nopt = require('nopt'),
         path = require('path'),
         // prompt = require( 'prompt' ),
-        scrap = require('scrap'),
         updateNotifier = require('update-notifier'),
         knownOpts = {
             'platforms': String,
