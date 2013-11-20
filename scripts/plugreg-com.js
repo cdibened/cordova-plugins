@@ -18,12 +18,12 @@
 
 (function() {
     'use strict';
-    var clc = require('cli-color'),
+    var clc = require('../node_modules/cli-color'),
         fs = require('fs'),
-        moment = require('moment'),
+        moment = require('../node_modules/moment'),
         os = require('os'),
-        // prompt = require( 'prompt' ),
-        request = require('request'),
+        // prompt = require( '../node_modules/prompt' ),
+        request = require('../node_modules/request'),
         tmp = os.tmpdir(),
         pluginsfile = tmp + '/pr-plugins.json',
         dateFromColorNotication = ['greenBright', 'yellowBright', 'redBright'];

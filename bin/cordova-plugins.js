@@ -2,13 +2,13 @@
 
 (function() {
     'use strict';
-    var clc = require('cli-color'),
-        exit = require('exit'),
+    var clc = require('../node_modules/cli-color'),
+        exit = require('../node_modules/exit'),
         fs = require('fs'),
-        nopt = require('nopt'),
+        nopt = require('../node_modules/nopt'),
         path = require('path'),
-        // prompt = require( 'prompt' ),
-        updateNotifier = require('update-notifier'),
+        // prompt = require( '../node_modules/prompt' ),
+        updateNotifier = require('../node_modules/update-notifier'),
         knownOpts = {
             'platforms': String,
             'url': String
