@@ -18,20 +18,23 @@
 
 (function() {
     'use strict';
-    var clc = require('../node_modules/cli-color'),
+    var clc = require('cli-color'),
         fs = require('fs'),
-        moment = require('../node_modules/moment'),
+        moment = require('moment'),
         os = require('os'),
-        // prompt = require( '../node_modules/prompt' ),
-        request = require('../node_modules/request'),
+        // prompt = require( 'prompt' ),
+        request = require('request'),
         tmp = os.tmpdir(),
         pluginsfile = tmp + '/pr-plugins.json',
+        urlColor = clc.magentaBright,
+        descriptionColor = clc.cyanBright,
+        searchMatchColor = clc.inverse,
         dateFromColorNotication = ['greenBright', 'yellowBright', 'redBright'];
 
     function printPluginList(obj, filter, platforms) {
         var plugin,
             diff = 0,
-            filterRegEx = new RegExp(filter, 'i'),
+            filterRegEx = new RegExp(filter, 'ig'),
             matchedPlatform = true,
             checkPlatform = function( val ) {
                 return ( this.platforms.indexOf( val.toLowerCase() ) !== -1 );
@@ -51,8 +54,8 @@
                             // }
                         }
                         if( matchedPlatform ) {
-                            console.log('Name:  ' + plugin.name);
-                            console.log(clc.cyanBright('Description:  ' + plugin.description));
+                            console.log('Name:  ' + plugin.name.replace(filterRegEx, searchMatchColor( filter )));
+                            console.log(descriptionColor('Description:  ' + plugin.description.trim().replace(filterRegEx, searchMatchColor( filter ))));
                             console.log('Platforms:  ' + plugin.platforms);
                             // console.log('Version:  ' + plugin['dist-tags'].latest.trim());
                             // diff = moment().diff(new Date(plugin.time.modified), 'months' );
@@ -60,7 +63,7 @@
                             //     diff = 2;
                             // }
                             // console.log(clc[dateFromColorNotication[diff]]('Last Modified:  ' + new Date(plugin.time.modified) + ' (' + moment(new Date(plugin.time.modified)).fromNow() +')'));
-                            console.log(clc.magentaBright('Url:  ' + plugin.url + '\n'));
+                            console.log(urlColor('Url:  ' + plugin.url + '\n'));
                         }
                     }
                 }

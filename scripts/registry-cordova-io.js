@@ -25,14 +25,17 @@
 
 (function() {
     'use strict';
-    var clc = require('../node_modules/cli-color'),
+    var clc = require('cli-color'),
         fs = require('fs'),
-        moment = require('../node_modules/moment'),
+        moment = require('moment'),
         os = require('os'),
-        // prompt = require( '../node_modules/prompt' ),
-        request = require('../node_modules/request'),
+        // prompt = require( 'prompt' ),
+        request = require('request'),
         tmp = os.tmpdir(),
         pluginsfile = tmp + '/rc-plugins.json',
+        urlColor = clc.magentaBright,
+        descriptionColor = clc.cyanBright,
+        searchMatchColor = clc.inverse,
         dateFromColorNotication = ['greenBright', 'yellowBright', 'redBright'];
 
     function printPluginList(obj, filter, platforms) {
@@ -58,8 +61,9 @@
                             // }
                         }
                         if( matchedPlatform ) {
-                            console.log('Name:  ' + plugin.name.trim());
-                            console.log(clc.cyanBright('Description:  ' + (plugin.description ? plugin.description.trim() : 'No description available.')));
+                            console.log('Name:  ' + plugin.name.replace(filterRegEx, searchMatchColor( filter )));
+                            console.log(descriptionColor('Description:  ' +
+                                (plugin.description ? plugin.description.trim().replace(filterRegEx, searchMatchColor( filter )) : 'No description available.')));
                             // console.log('Platforms:  ' + plugin.platforms);
                             console.log('Version:  ' + plugin['dist-tags'].latest.trim());
                             diff = moment().diff(new Date(plugin.time.modified), 'months' );
@@ -67,7 +71,7 @@
                                 diff = 2;
                             }
                             console.log(clc[dateFromColorNotication[diff]]('Last Modified:  ' + new Date(plugin.time.modified) + ' (' + moment(new Date(plugin.time.modified)).fromNow() +')'));
-                            console.log(clc.magentaBright('Url:  http://registry.cordova.io/' + key + '/-/' + key + '-' + plugin['dist-tags'].latest.trim() + '.tgz \n'));
+                            console.log(urlColor('Url:  http://registry.cordova.io/' + key + '/-/' + key + '-' + plugin['dist-tags'].latest.trim() + '.tgz \n'));
                         }
                     }
                 }
