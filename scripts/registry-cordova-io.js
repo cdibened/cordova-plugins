@@ -61,9 +61,9 @@
                             // }
                         }
                         if( matchedPlatform ) {
-                            console.log('Name:  ' + plugin.name.replace(filterRegEx, searchMatchColor( filter )));
+                            console.log('Name:  ' + plugin.name.replace(filterRegEx, searchMatchColor( filter.toUpperCase() )));
                             console.log(descriptionColor('Description:  ' +
-                                (plugin.description ? plugin.description.trim().replace(filterRegEx, searchMatchColor( filter )) : 'No description available.')));
+                                (plugin.description ? plugin.description.trim().replace(filterRegEx, searchMatchColor( filter.toUpperCase() )) : 'No description available.')));
                             // console.log('Platforms:  ' + plugin.platforms);
                             console.log('Version:  ' + plugin['dist-tags'].latest.trim());
                             diff = moment().diff(new Date(plugin.time.modified), 'months' );

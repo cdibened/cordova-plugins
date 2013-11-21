@@ -12,7 +12,7 @@ REST API | REST API
 ~220 plugins | ~100 plugins
 Supports platform filter | No support for platform filter
 Git plugin project URL | .tgz plugin tarball URL
-No version number (coming soon) | Supports version number 
+No version number (coming soon) | Supports version number
 No modified date (coming soon) | Supports  modified date
 
 
@@ -62,13 +62,12 @@ cordova-plugins -p ios,android -u http://plugreg.com (or plugreg) list
 
 cordova-plugins search camera
 
-- will list all plugins from `http://plugins.cordova.io` that have the term `camera` in the name or description
+- will list all plugins from `http://plugins.cordova.io` that have the term `camera` in the name or description.  The search term matches will be highlighted and CAPTIALIZED to notice easier.
 
 
 ###2-Dew
 
 - Hook into cordova-cli `add plugin` command.
-- Highlight search term
 - Optimize and clean up code
 
 
