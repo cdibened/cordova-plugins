@@ -9,11 +9,11 @@ Comparison between the two sites:
 http://plugreg.com | http://plugins.cordova.io
 --- | ---
 REST API | REST API
-~220 plugins | ~100 plugins
-Supports platform filter | No support for platform filter
+~270 plugins | ~100 plugins
 Git plugin project URL | .tgz plugin tarball URL
-No version number (coming soon) | Supports version number
-No modified date (coming soon) | Supports  modified date
+Supports platform filter | No support for platform filter
+Supports version number | Supports version number
+Supports modified date | Supports modified date
 
 
 *Modified date is color coded to give an indication on the activity.
