@@ -29,7 +29,7 @@
 
         tmp = os.tmpdir(),
         pluginsfile = tmp + '/pr-plugins.json',
-        url = 'http://plugreg.com/api/plugsins',
+        url = 'http://plugreg.com/api/plugins',
         urlColor = clc.magentaBright,
         descriptionColor = clc.cyanBright,
         searchMatchColor = clc.inverse,

@@ -35,7 +35,7 @@
         request = require('request'),
         tmp = os.tmpdir(),
         pluginsfile = tmp + '/rc-plugins.json',
-        url = 'http://registry.cordova.iwo/-/all',
+        url = 'http://registry.cordova.io/-/all',
         urlColor = clc.magentaBright,
         descriptionColor = clc.cyanBright,
         searchMatchColor = clc.inverse,
