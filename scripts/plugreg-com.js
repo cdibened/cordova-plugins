@@ -19,13 +19,17 @@
 (function() {
     'use strict';
     var clc = require('cli-color'),
+        exit = require('exit'),
         fs = require('fs'),
         moment = require('moment'),
         os = require('os'),
+        ping = require('ping'),
         // prompt = require( 'prompt' ),
         request = require('request'),
+
         tmp = os.tmpdir(),
         pluginsfile = tmp + '/pr-plugins.json',
+        url = 'http://plugreg.com/api/plugsins',
         urlColor = clc.magentaBright,
         descriptionColor = clc.cyanBright,
         searchMatchColor = clc.inverse,
@@ -34,6 +38,7 @@
     function printPluginList(obj, filter, platforms) {
         var plugin,
             diff = 0,
+            filter = filter || "",
             filterRegEx = new RegExp(filter, 'ig'),
             matchedPlatform = true,
             checkPlatform = function( val ) {
@@ -55,14 +60,20 @@
                         }
                         if( matchedPlatform ) {
                             console.log('Name:  ' + plugin.name.replace(filterRegEx, searchMatchColor( filter.toUpperCase() )));
-                            console.log(descriptionColor('Description:  ' + plugin.description.trim().replace(filterRegEx, searchMatchColor( filter.toUpperCase() ))));
+                            console.log(descriptionColor('Description:  ' +
+                                (plugin.description ? plugin.description.trim().replace(filterRegEx, searchMatchColor( filter.toUpperCase() )) : 'No description available.')));
                             console.log('Platforms:  ' + plugin.platforms);
-                            // console.log('Version:  ' + plugin['dist-tags'].latest.trim());
-                            // diff = moment().diff(new Date(plugin.time.modified), 'months' );
-                            // if( diff > 2 ) {
-                            //     diff = 2;
-                            // }
-                            // console.log(clc[dateFromColorNotication[diff]]('Last Modified:  ' + new Date(plugin.time.modified) + ' (' + moment(new Date(plugin.time.modified)).fromNow() +')'));
+                            console.log('Version:  ' + ( plugin.version ? plugin.version.trim() : "No version available." ) );
+                            if( plugin.modified ) {
+                                diff = moment().diff(new Date(plugin.modified), 'months' );
+                                if( diff > 2 ) {
+                                    diff = 2;
+                                }
+                                console.log(clc[dateFromColorNotication[diff]]('Last Modified:  ' + new Date(plugin.modified) + ' (' + moment(new Date(plugin.modified)).fromNow() +')'));
+                            }
+                            else {
+                                console.log(clc.redBright('Last Modified:  No modified date available.'));
+                            }
                             console.log(urlColor('Url:  ' + plugin.url + '\n'));
                         }
                     }
@@ -72,12 +83,18 @@
     }
 
     function _fetch(search, platforms) {
+        ping.sys.probe(url, function(isAlive){
+            if( !isAlive ) {
+                console.log(url + ":  " + clc.redBright(" is not reachable." ) );
+                exit(1);
+            }
+        });
         var file = fs.createWriteStream(pluginsfile,'w+'),
-            req = request('http://plugreg.com/api/plugins').pipe(file);
-            req.on( 'finish', function() {
-                var plugins = require(pluginsfile);
-                printPluginList(plugins, search, platforms);
-            });
+            req = request(url).pipe(file);
+        req.on( 'finish', function() {
+            var plugins = require(pluginsfile);
+            printPluginList(plugins, search, platforms);
+        });
     }
 
     exports.fetch = _fetch;

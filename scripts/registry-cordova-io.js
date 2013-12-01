@@ -26,13 +26,16 @@
 (function() {
     'use strict';
     var clc = require('cli-color'),
+        exit = require('exit'),
         fs = require('fs'),
         moment = require('moment'),
         os = require('os'),
+        ping = require('ping'),
         // prompt = require( 'prompt' ),
         request = require('request'),
         tmp = os.tmpdir(),
         pluginsfile = tmp + '/rc-plugins.json',
+        url = 'http://registry.cordova.iwo/-/all',
         urlColor = clc.magentaBright,
         descriptionColor = clc.cyanBright,
         searchMatchColor = clc.inverse,
@@ -41,6 +44,7 @@
     function printPluginList(obj, filter, platforms) {
         var plugin,
             diff = 0,
+            filter = filter || "",
             filterRegEx = new RegExp(filter, 'i'),
             matchedPlatform = true,
             checkPlatform = function( val ) {
@@ -66,11 +70,16 @@
                                 (plugin.description ? plugin.description.trim().replace(filterRegEx, searchMatchColor( filter.toUpperCase() )) : 'No description available.')));
                             // console.log('Platforms:  ' + plugin.platforms);
                             console.log('Version:  ' + plugin['dist-tags'].latest.trim());
-                            diff = moment().diff(new Date(plugin.time.modified), 'months' );
-                            if( diff > 2 ) {
-                                diff = 2;
+                            if( plugin.time.modified ) {
+                                diff = moment().diff(new Date(plugin.time.modified), 'months' );
+                                if( diff > 2 ) {
+                                    diff = 2;
+                                }
+                                console.log(clc[dateFromColorNotication[diff]]('Last Modified:  ' + new Date(plugin.time.modified) + ' (' + moment(new Date(plugin.time.modified)).fromNow() +')'));
                             }
-                            console.log(clc[dateFromColorNotication[diff]]('Last Modified:  ' + new Date(plugin.time.modified) + ' (' + moment(new Date(plugin.time.modified)).fromNow() +')'));
+                            else {
+                                console.log(clc.redBright('Last Modified:  No modified date available.'));
+                            }
                             console.log(urlColor('Url:  http://registry.cordova.io/' + key + '/-/' + key + '-' + plugin['dist-tags'].latest.trim() + '.tgz \n'));
                         }
                     }
@@ -80,12 +89,18 @@
     }
 
     function _fetch(search, platforms) {
+        ping.sys.probe(url, function(isAlive){
+            if( !isAlive ) {
+                console.log(url + ":  " + clc.redBright(" is not reachable." ) );
+                exit(1);
+            }
+        });
         var file = fs.createWriteStream(pluginsfile,'w+'),
-            req = request('http://registry.cordova.io/-/all').pipe(file);
-            req.on( 'finish', function() {
-                var plugins = require(pluginsfile);
-                printPluginList(plugins, search, platforms);
-            });
+            req = request(url).pipe(file);
+        req.on( 'finish', function() {
+            var plugins = require(pluginsfile);
+            printPluginList(plugins, search, platforms);
+        });
     }
 
     exports.fetch = _fetch;
