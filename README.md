@@ -62,7 +62,7 @@ cordova-plugins -p ios,android -u http://plugreg.com (or plugreg) list
 
 cordova-plugins search camera
 
-- will list all plugins from `http://plugins.cordova.io` that have the term `camera` in the name or description.  The search term matches will be highlighted and CAPTIALIZED to notice easier.
+- will list all plugins from `http://plugins.cordova.io` that have the term `camera` in the name or description.  The search term matches will be highlighted and CAPITALIZED to notice easier.
 
 
 ###2-Dew
