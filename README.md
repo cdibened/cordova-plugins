@@ -9,7 +9,7 @@ Comparison between the two sites:
 http://plugreg.com | http://plugins.cordova.io
 --- | ---
 REST API | REST API
-~270 plugins | ~100 plugins
+>400 plugins | ~100 plugins
 Git plugin project URL | .tgz plugin tarball URL
 Supports platform filter | No support for platform filter
 Supports version number | Supports version number
