@@ -2,6 +2,7 @@ cordova-plugins
 ===============
 
 NPM package to list/download available Phonegap plugins from [http://plugins.cordova.io/](http://plugins.cordova.io/) and/or
+NPM package to list/download available Phonegap plugins from [http://registry.cordova.io/](http://registry.cordova.io/) and/or
 [http://plugreg.com/](http://plugreg.com/)
 
 Comparison between the two repos:
