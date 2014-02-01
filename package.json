@@ -2,7 +2,7 @@
     "name": "cordova-plugins",
     "version": "0.0.9",
     "author": "Cesidio DiBenedetto <sid.dibenedetto@gmail.com>",
-    "description": "List/download available Phonegap plugins from http://plugins.cordova.io and http://plugreg.com",
+    "description": "List/download available Phonegap plugins from http://registry.cordova.io and http://plugreg.com",
     "keywords": [
         "cordova",
         "phonegap",
