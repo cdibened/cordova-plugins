@@ -1,13 +1,12 @@
 cordova-plugins
 ===============
 
-NPM package to list/download available Phonegap plugins from [http://plugins.cordova.io/](http://plugins.cordova.io/) and/or
 NPM package to list/download available Phonegap plugins from [http://registry.cordova.io/](http://registry.cordova.io/) and/or
 [http://plugreg.com/](http://plugreg.com/)
 
 Comparison between the two repos:
 
-http://plugreg.com | http://plugins.cordova.io
+http://plugreg.com | http://registry.cordova.io
 --- | ---
 REST API | REST API
 ~500 plugins | ~100 plugins
@@ -63,7 +62,7 @@ cordova-plugins -p ios,android -u http://plugreg.com (or plugreg) list
 
 cordova-plugins search camera
 
-- will list all plugins from `http://plugins.cordova.io` that have the term `camera` in the name or description.  The search term matches will be highlighted and CAPITALIZED to notice easier.
+- will list all plugins from `http://registry.cordova.io` that have the term `camera` in the name or description.  The search term matches will be highlighted and CAPITALIZED to notice easier.
 
 ###Changed
 Commandline argument `-u` has been changed to `-r` to reflect the naming convention of repo instead of url.
