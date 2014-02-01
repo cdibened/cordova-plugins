@@ -108,5 +108,3 @@ Supported colors are (taken from https://github.com/medikoo/cli-color):
 
 - Hook into cordova-cli `add plugin` command.
 - Optimize and clean up code
-
-
