@@ -11,11 +11,11 @@
         updateNotifier = require('update-notifier'),
         knownOpts = {
             'platforms': String,
-            'url': String
+            'repo': String
         },
         shortHands = {
             'p': ['--platforms'],
-            'u': ['--url']
+            'r': ['--repo']
         },
         parsed = nopt(knownOpts, shortHands, process.argv, 2),
         plugreg = require('../scripts/plugreg-com'),
@@ -36,16 +36,16 @@
         console.log( 'cordova-plugins [options] command [term]');
         console.log( '' );
         console.log( '   commands:');
-        console.log( '       list       - display all available plugins. Is the default.');
+        console.log( '       list       - display all available plugins');
         console.log( '       search     - search plugins for a specfic term/phrase ');
         console.log( '' );
         console.log( '   options:');
         console.log( '       -p         - comma delimited (no spaces) platforms to filter by.');
         console.log('                    Valid platforms are: ' + clc.redBright( 'ios android blackberry10 wp7 wp8 firefoxos' ) + '.' );
         console.log('                    Default is all.');
-        console.log( '       -u         - the url of the repo to use.');
+        console.log( '       -r         - the url/name of the repo to use.');
         console.log('                    Valid urls are: '+ clc.yellowBright( 'http://plugreg.com') + ' or use shortform ' + clc.yellowBright( 'plugreg' ) );
-        console.log('                    and ' + clc.yellowBright('http://plugins.cordova.io') + '. Default is http://plugins.cordova.io');
+        console.log('                    and ' + clc.yellowBright('http://registry.cordova.io') + ' or use shortform ' + clc.yellowBright( 'cordova' ) + '. Default is http://registry-cordova-io.cordova.io');
         console.log( '' );
         console.log( '   term           - term to use when using the `search` command.');
         console.log('                    Wrap the term in quotes if there are spaces.');
@@ -54,18 +54,28 @@
     }
     else {
         var platforms = (parsed.platforms ? parsed.platforms.split(',') : []),
-            url = parsed.url,
+            repo = parsed.repo,
             command = parsed.argv.remain[0] || 'list',
-            plugin = parsed.argv.remain[1];
+            plugin = parsed.argv.remain[1],
+            userconfig = null;
+
+            // userconfig = require(process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME']+'/.cordova-plugins');
+        try {
+            userconfig = JSON.parse(fs.readFileSync(process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME']+'/.cordova-plugins', 'utf8' ));
+            repo = repo || (userconfig && userconfig.repo);
+        }
+        catch(e) {
+            console.log( 'Cannot find or parse config file.  Please make sure it exists and is valid json. Using Defaults.\n');
+        }
 
         switch (command.toLowerCase()) {
         case 'list':
         case 'search':
-            if( url && ( url.toLowerCase().indexOf( 'plugreg' ) !== -1 ) ) {
-                plugreg.fetch(plugin,platforms);
+            if( repo && ( repo.toLowerCase().indexOf( 'plugreg' ) !== -1 ) ) {
+                plugreg.fetch(plugin,platforms,userconfig);
             }
             else {
-                registrycordova.fetch(plugin,platforms);
+                registrycordova.fetch(plugin,platforms,userconfig);
             }
             break;
         // case 'get':

@@ -26,12 +26,12 @@
         ping = require('ping'),
         // prompt = require( 'prompt' ),
         request = require('request'),
-
         tmp = os.tmpdir(),
         pluginsfile = tmp + '/pr-plugins.json',
-        url = 'http://plugreg.com/api/plugins',
-        urlColor = clc.magentaBright,
-        descriptionColor = clc.cyanBright,
+        host = 'plugreg.com',
+        url = 'http://'+host+'/api/plugins',
+        urlColor = 'magentaBright',
+        descriptionColor = 'cyanBright',
         searchMatchColor = clc.inverse,
         dateFromColorNotication = ['greenBright', 'yellowBright', 'redBright'];
 
@@ -82,13 +82,15 @@
         }
     }
 
-    function _fetch(search, platforms) {
-        ping.sys.probe(url, function(isAlive){
-            if( !isAlive ) {
-                console.log(url + ":  " + clc.redBright(" is not reachable." ) );
+    function _fetch(search, platforms, userconfig) {
+        ping.sys.probe(host, function(isAlive){
+            if(!isAlive) {
+                console.log(clc.whiteBright(url) + clc.redBright(' is not reachable.'));
                 exit(1);
             }
         });
+        urlColor = clc[(userconfig && userconfig.urlColor) || urlColor];
+        descriptionColor = clc[(userconfig && userconfig.descriptionColor) || descriptionColor];
         var file = fs.createWriteStream(pluginsfile,'w+'),
             req = request(url).pipe(file);
         req.on( 'finish', function() {
