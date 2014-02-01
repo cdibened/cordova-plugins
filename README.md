@@ -44,7 +44,8 @@ options:
                 Default is all.
     -r         - the url/name of the repo to use.
                 Valid urls are: http://plugreg.com (shortform plugreg) and
-                http://registry.cordova.io (shortform cordova). Default is http://registry.cordova.io
+                http://registry.cordova.io (shortform cordova).
+                Default is http://registry.cordova.io
 
 term           - term to use when using the `search` command.
                 Wrap the term in quotes if there are spaces.

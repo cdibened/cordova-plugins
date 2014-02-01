@@ -45,7 +45,8 @@
         console.log('                    Default is all.');
         console.log( '       -r         - the url/name of the repo to use.');
         console.log('                    Valid urls are: '+ clc.yellowBright( 'http://plugreg.com') + ' or use shortform ' + clc.yellowBright( 'plugreg' ) );
-        console.log('                    and ' + clc.yellowBright('http://registry.cordova.io') + ' or use shortform ' + clc.yellowBright( 'cordova' ) + '. Default is http://registry-cordova-io.cordova.io');
+        console.log('                    and ' + clc.yellowBright('http://registry.cordova.io') + ' or use shortform ' + clc.yellowBright( 'cordova' ) + '.');
+        console.log('                    Default is http://registry-cordova-io.cordova.io');
         console.log( '' );
         console.log( '   term           - term to use when using the `search` command.');
         console.log('                    Wrap the term in quotes if there are spaces.');
