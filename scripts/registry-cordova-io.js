@@ -70,7 +70,7 @@
                             console.log(descriptionColor('Description:  ' +
                                 (plugin.description ? plugin.description.trim().replace(filterRegEx, searchMatchColor( filter.toUpperCase() )) : 'No description available.')));
                             // console.log('Platforms:  ' + plugin.platforms);
-                            console.log('Version:  ' + plugin['dist-tags'].latest.trim());
+                            console.log('Version:  ' + ( (plugin['dist-tags'].latest && plugin['dist-tags'].latest.trim()) || 'No version number available.'));
                             if( plugin.time.modified ) {
                                 diff = moment().diff(new Date(plugin.time.modified), 'months' );
                                 if( diff > 2 ) {
@@ -81,7 +81,7 @@
                             else {
                                 console.log(clc.redBright('Last Modified:  No modified date available.'));
                             }
-                            console.log(urlColor('Url:  http://registry.cordova.io/' + key + '/-/' + key + '-' + plugin['dist-tags'].latest.trim() + '.tgz \n'));
+                            console.log(urlColor('Url:  http://registry.cordova.io/' + key + '/-/' + key + '-' + ( (plugin['dist-tags'].latest && plugin['dist-tags'].latest.trim()) || "" ) + '.tgz \n'));
                         }
                     }
                 }

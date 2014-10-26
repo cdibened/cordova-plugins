@@ -1,8 +1,8 @@
 {
     "name": "cordova-plugins",
-    "version": "0.0.9",
+    "version": "1.0.0",
     "author": "Cesidio DiBenedetto <sid.dibenedetto@gmail.com>",
-    "description": "List/download available Phonegap plugins from http://registry.cordova.io and http://plugreg.com",
+    "description": "List/download available Phonegap plugins from http://registry.cordova.io and/or http://plugreg.com",
     "keywords": [
         "cordova",
         "phonegap",
@@ -26,7 +26,7 @@
         "exit": ">=0.0.1",
         "moment": ">=2.4.0",
         "nopt": ">=2.1.2",
-        "prompt": ">=0.2.*",
+        "prompt": ">=0.2.0",
         "request": ">=2.27.0",
         "update-notifier": ">=0.1.7",
         "ping": ">=0.1.7"

@@ -9,7 +9,7 @@ Comparison between the two repos:
 http://plugreg.com | http://registry.cordova.io
 --- | ---
 REST API | REST API
-~500 plugins | ~100 plugins
+~1300 plugins | ~450 plugins
 Git plugin project URL | .tgz plugin tarball URL
 Supports platform filter | No support for platform filter
 Supports version number | Supports version number
@@ -105,7 +105,7 @@ Supported colors are (taken from https://github.com/medikoo/cli-color):
   </tbody>
 </table>
 
-###2-Dew
+###Future Considerations
 
 - Hook into cordova-cli `add plugin` command.
 - Optimize and clean up code

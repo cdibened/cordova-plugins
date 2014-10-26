@@ -20,11 +20,13 @@
         parsed = nopt(knownOpts, shortHands, process.argv, 2),
         plugreg = require('../scripts/plugreg-com'),
         registrycordova = require('../scripts/registry-cordova-io'),
+        pkg = require('../package.json'),
         args = process.argv.splice(2);
 
     if (args.indexOf('--no-update-notifier') === -1) {
         // Checks for available update and returns an instance
-        var notifier = updateNotifier( { packagePath: '../package.json', updateCheckInterval: 1000 * 60 * 60 * 24 } );
+        var notifier = updateNotifier( { packageName: pkg.name, 
+            packageVersion: pkg.version, updateCheckInterval: 1000 * 60 * 60 * 24 } );
         if (notifier.update) {
             // Notify using the built-in convenience method
             notifier.notify(true);
